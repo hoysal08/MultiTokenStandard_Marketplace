@@ -13,7 +13,7 @@ contract MarketPlace is Ownable,ERC1155{
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    uint256 public constant PRICE_PER_NFT= 0.01 ether;
+    uint256 public constant PRICE_PER_NFT= 0.001 ether;
     
     constructor(string memory baseURI)ERC1155(baseURI)Ownable() {
       _tokenIds.increment();
@@ -29,6 +29,23 @@ contract MarketPlace is Ownable,ERC1155{
       uint256 tokenid = _tokenIds.current();
       _mint(to,tokenid,amount,data);
       safeTransferFrom(msg.sender,owner(),FT,amount*PRICE_PER_NFT,"");
+    }
+    function mintBatch(address to,uint256[] memory amounts,bytes memory data) public{
+      uint256 tobe_minted;
+
+      for(uint i = 0;i<amounts.length;i++)
+      {
+         tobe_minted += amounts[i];
+      }
+      require(balanceOf(msg.sender,FT)>=tobe_minted*PRICE_PER_NFT,"low balance to mint NFT's");
+      
+      for(uint i = 0;i<amounts.length;i++)
+      {
+       _tokenIds.increment();
+       uint256 tokenid = _tokenIds.current();
+       _mint(to,tokenid,amounts[i],data);
+      }
+      safeTransferFrom(msg.sender,owner(),FT,tobe_minted*PRICE_PER_NFT,"");
     }
 
 }
