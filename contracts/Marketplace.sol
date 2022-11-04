@@ -21,8 +21,8 @@ contract Marketplace is ERC1155Holder,Ownable {
 
     uint256 public MarketplaceId=1;
 
-    mapping (uint256=>NFTMarketItem) mpidtoitem;
-    mapping (address=>mapping(uint256=>uint256)) tokentompid;
+    mapping (uint256=>NFTMarketItem) public mpidtoitem;
+    mapping (address=>mapping(uint256=>uint256)) public tokentompid;
 
     constructor(uint256 _ft_token_id,address _ft_token_contract) Ownable() {
         FT_Token_ID=_ft_token_id;
