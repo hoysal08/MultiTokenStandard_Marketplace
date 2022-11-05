@@ -6,7 +6,7 @@ const { ethers } = require("hardhat");
 const baseuri="www.test.com";
 const FT_Token_Id=1;
 
-describe("MarketPlace",async()=>{
+describe("NFTContract",async()=>{
 
     async function deployFixture(){
         const [owner,account1,account2]=await ethers.getSigners();
